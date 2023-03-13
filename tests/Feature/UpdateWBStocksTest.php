@@ -2,10 +2,11 @@
 
 namespace Tests\Feature;
 
-
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class UpdateWBPricesTest extends TestCase
+class UpdateWBStocksTest extends TestCase
 {
     /**
      * A basic feature test example.
@@ -16,7 +17,7 @@ class UpdateWBPricesTest extends TestCase
     {
 
 
-        $job = new \App\Jobs\UpdateWBPrices;
+        $job = new \App\Jobs\UpdateWBStocks;
 
         $job->handle();
 

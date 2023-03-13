@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
-class UpdateWBSales implements ShouldQueue
+class UpdateWBStocks implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -37,9 +37,8 @@ class UpdateWBSales implements ShouldQueue
             [
                 'Authorization' => env('STATISTICS_KEY_API')
             ]
-        )->get('https://statistics-api.wildberries.ru/api/v1/supplier/sales', [
-                'dateFrom' => Carbon::yesterday()->toRfc3339String(),
-                'flag' => 0
+        )->get('https://statistics-api.wildberries.ru/api/v1/supplier/stocks', [
+                'dateFrom' => Carbon::yesterday()->toRfc3339String()
             ]);
 
         if ($response->successful()) {
@@ -48,36 +47,25 @@ class UpdateWBSales implements ShouldQueue
 
                 foreach ($response->json() as $key => $value) {
 
-                    DB::table('wb_sales')->insert([
-                        'gNumber' => $value['gNumber'],
-                        'date' => $value['date'],
+                    DB::table('wb_stocks')->insert([
                         'lastChangeDate' => $value['lastChangeDate'],
                         'supplierArticle' => $value['supplierArticle'],
                         'techSize' => $value['techSize'],
                         'barcode' => $value['barcode'],
-                        'totalPrice' => $value['totalPrice'],
-                        'discountPercent' => $value['discountPercent'],
+                        'quantity' => $value['quantity'],
                         'isSupply' => $value['isSupply'],
                         'isRealization' => $value['isRealization'],
-                        'promoCodeDiscount' => $value['promoCodeDiscount'],
+                        'quantityFull' => $value['quantityFull'],
                         'warehouseName' => $value['warehouseName'],
-                        'countryName' => $value['countryName'],
-                        'oblastOkrugName' => $value['oblastOkrugName'],
-                        'regionName' => $value['regionName'],
-                        'incomeID' => $value['incomeID'],
-                        'saleID' => $value['saleID'],
-                        'odid' => $value['odid'],
-                        'spp' => $value['spp'],
-                        'forPay' => $value['forPay'],
-                        'finishedPrice' => $value['finishedPrice'],
-                        'priceWithDisc' => $value['priceWithDisc'],
                         'nmId' => $value['nmId'],
                         'subject' => $value['subject'],
                         'category' => $value['category'],
+                        'daysOnSite' => $value['daysOnSite'],
                         'brand' => $value['brand'],
-                        'isStorno' => $value['isStorno'],
-                        'sticker' => $value['sticker'],
-                        'srid' => $value['srid'],
+                        'SCCode' => $value['SCCode'],
+                        'Price' => $value['Price'],
+                        'Discount' => $value['Discount']
+
                     ]);
                 }
             });

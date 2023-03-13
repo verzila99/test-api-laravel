@@ -2,10 +2,9 @@
 
 namespace Tests\Feature;
 
-
 use Tests\TestCase;
 
-class UpdateWBPricesTest extends TestCase
+class UpdateWBSalesTest extends TestCase
 {
     /**
      * A basic feature test example.
@@ -16,7 +15,7 @@ class UpdateWBPricesTest extends TestCase
     {
 
 
-        $job = new \App\Jobs\UpdateWBPrices;
+        $job = new \App\Jobs\UpdateWBSales;
 
         $job->handle();
 
