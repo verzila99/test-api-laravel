@@ -33,10 +33,12 @@ class UpdateWBSupplies implements ShouldQueue
      */
     public function handle()
     {
-        $response = Http::retry(3, 100)->withHeaders([
-            'HeaderApiKey' => env('STANDARD_KEY_API')
-        ])->get('https://statistics-api.wildberries.ru/api/v1/supplier/incomes', [
-                'dateFrom' => Carbon::yesterday()
+        $response = Http::retry(3, 100)->withHeaders(
+            [
+                'Authorization' => env('STATISTICS_KEY_API')
+            ]
+        )->get('https://statistics-api.wildberries.ru/api/v1/supplier/incomes', [
+                'dateFrom' => Carbon::yesterday()->toRfc3339String()
             ]);
 
         if ($response->successful()) {
@@ -62,7 +64,7 @@ class UpdateWBSupplies implements ShouldQueue
                     ]);
                 }
             });
-
+            return null;
         } else {
             $response->throw();
         }

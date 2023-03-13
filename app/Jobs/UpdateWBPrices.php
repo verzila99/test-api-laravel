@@ -2,12 +2,15 @@
 
 namespace App\Jobs;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class UpdateWBPrices implements ShouldQueue
 {
@@ -30,6 +33,29 @@ class UpdateWBPrices implements ShouldQueue
      */
     public function handle()
     {
-        //
+        $response = Http::retry(3, 100)->withHeaders([
+            'Authorization' => env('STATISTICS_KEY_API')
+        ])->get('https://statistics-api.wildberries.ru/api/v1/supplier/incomes', [
+                'dateFrom' => Carbon::yesterday()
+            ]);
+
+        if ($response->successful()) {
+
+            DB::transaction(function () use ($response) {
+
+                foreach ($response->json() as $key => $value) {
+
+                    DB::table('wb_prices')->insert([
+                        'nmId' => $value['nmId'],
+                        'price' => $value['price'],
+                        'discount' => $value['discount'],
+                        'promoCode' => $value['promoCode'],
+                    ]);
+                }
+            });
+
+        } else {
+            $response->throw();
+        }
     }
 }

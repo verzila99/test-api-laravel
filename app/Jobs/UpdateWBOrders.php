@@ -2,12 +2,15 @@
 
 namespace App\Jobs;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class UpdateWBOrders implements ShouldQueue
 {
@@ -30,6 +33,48 @@ class UpdateWBOrders implements ShouldQueue
      */
     public function handle()
     {
-        //
+        $response = Http::retry(3, 100)->withHeaders(
+            [
+                'Authorization' => env('STATISTICS_KEY_API')
+            ]
+        )->get('https://statistics-api.wildberries.ru/api/v1/supplier/orders', [
+                'dateFrom' => Carbon::yesterday()->toRfc3339String(),
+                'flag' => 0
+            ]);
+
+        if ($response->successful()) {
+
+            DB::transaction(function () use ($response) {
+
+                foreach ($response->json() as $key => $value) {
+
+                    DB::table('wb_supplies')->insert([
+                        'gNumber' => $value['gNumber'],
+                        'date' => $value['date'],
+                        'lastChangeDate' => $value['lastChangeDate'],
+                        'supplierArticle' => $value['supplierArticle'],
+                        'techSize' => $value['techSize'],
+                        'barcode' => $value['barcode'],
+                        'totalPrice' => $value['totalPrice'],
+                        'discountPercent' => $value['discountPercent'],
+                        'warehouseName' => $value['warehouseName'],
+                        'oblast' => $value['oblast'],
+                        'incomeId' => $value['incomeId'],
+                        'odid' => $value['odid'],
+                        'nmId' => $value['nmId'],
+                        'subject' => $value['subject'],
+                        'category' => $value['category'],
+                        'brand' => $value['brand'],
+                        'isCancel' => $value['isCancel'],
+                        'cancel_dt' => $value['cancel_dt'],
+                        'sticker' => $value['sticker'],
+                        'srid' => $value['srid'],
+                    ]);
+                }
+            });
+            return null;
+        } else {
+            $response->throw();
+        }
     }
 }
