@@ -48,7 +48,7 @@ class UpdateWBOrders implements ShouldQueue
 
                 foreach ($response->json() as $key => $value) {
 
-                    DB::table('wb_supplies')->insert([
+                    DB::table('wb_orders')->insert([
                         'gNumber' => $value['gNumber'],
                         'date' => $value['date'],
                         'lastChangeDate' => $value['lastChangeDate'],
@@ -59,7 +59,7 @@ class UpdateWBOrders implements ShouldQueue
                         'discountPercent' => $value['discountPercent'],
                         'warehouseName' => $value['warehouseName'],
                         'oblast' => $value['oblast'],
-                        'incomeId' => $value['incomeId'],
+                        'incomeID' => $value['incomeID'],
                         'odid' => $value['odid'],
                         'nmId' => $value['nmId'],
                         'subject' => $value['subject'],
@@ -72,7 +72,6 @@ class UpdateWBOrders implements ShouldQueue
                     ]);
                 }
             });
-            return null;
         } else {
             $response->throw();
         }

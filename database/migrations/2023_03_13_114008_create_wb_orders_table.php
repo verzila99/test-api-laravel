@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->unsignedInteger('discountPercent');
             $table->string('warehouseName');
             $table->string('oblast');
-            $table->unsignedBigInteger('incomeId');
+            $table->unsignedBigInteger('incomeID');
             $table->unsignedBigInteger('odid');
             $table->unsignedBigInteger('nmId');
             $table->string('subject');

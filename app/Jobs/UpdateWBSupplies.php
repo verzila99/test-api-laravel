@@ -64,7 +64,6 @@ class UpdateWBSupplies implements ShouldQueue
                     ]);
                 }
             });
-            return null;
         } else {
             $response->throw();
         }
