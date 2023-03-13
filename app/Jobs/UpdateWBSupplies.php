@@ -38,7 +38,7 @@ class UpdateWBSupplies implements ShouldQueue
                 'Authorization' => env('STATISTICS_KEY_API')
             ]
         )->get('https://statistics-api.wildberries.ru/api/v1/supplier/incomes', [
-                'dateFrom' => Carbon::yesterday()->toRfc3339String()
+                'dateFrom' => Carbon::yesterday("UTC")->toIso8601ZuluString()
             ]);
 
         if ($response->successful()) {

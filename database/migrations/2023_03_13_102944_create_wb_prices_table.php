@@ -17,7 +17,8 @@ return new class extends Migration {
             $table->unsignedInteger('price')->index();
             $table->unsignedInteger('discount');
             $table->unsignedBigInteger('promoCode')->index();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 

@@ -38,7 +38,7 @@ class UpdateWBSales implements ShouldQueue
                 'Authorization' => env('STATISTICS_KEY_API')
             ]
         )->get('https://statistics-api.wildberries.ru/api/v1/supplier/sales', [
-                'dateFrom' => Carbon::yesterday()->toRfc3339String(),
+                'dateFrom' => Carbon::yesterday("UTC")->toIso8601ZuluString(),
                 'flag' => 0
             ]);
 
@@ -75,7 +75,7 @@ class UpdateWBSales implements ShouldQueue
                         'subject' => $value['subject'],
                         'category' => $value['category'],
                         'brand' => $value['brand'],
-                        'isStorno' => $value['isStorno'],
+                        'isStorno' => $value['IsStorno'],
                         'sticker' => $value['sticker'],
                         'srid' => $value['srid'],
                     ]);

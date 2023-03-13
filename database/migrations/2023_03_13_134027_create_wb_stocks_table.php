@@ -30,7 +30,8 @@ return new class extends Migration {
             $table->string('SCCode');
             $table->integer('Price');
             $table->integer('Discount');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 
