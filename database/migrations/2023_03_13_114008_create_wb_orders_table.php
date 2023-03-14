@@ -13,26 +13,26 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('wb_orders', function (Blueprint $table) {
-            $table->string('gNumber');
-            $table->dateTime('date');
-            $table->dateTime('lastChangeDate');
-            $table->string('supplierArticle');
+            $table->string('gNumber')->index();
+            $table->dateTime('date')->index();
+            $table->dateTime('lastChangeDate')->index();
+            $table->string('supplierArticle')->index();
             $table->string('techSize');
             $table->string('barcode');
             $table->bigInteger('totalPrice');
             $table->bigInteger('discountPercent');
-            $table->string('warehouseName');
-            $table->string('oblast');
-            $table->unsignedBigInteger('incomeID');
-            $table->unsignedBigInteger('odid');
-            $table->unsignedBigInteger('nmId');
-            $table->string('subject');
-            $table->string('category');
-            $table->string('brand');
-            $table->boolean('isCancel');
-            $table->dateTime('cancel_dt');
+            $table->string('warehouseName')->index();
+            $table->string('oblast')->index();
+            $table->unsignedBigInteger('incomeID')->index();
+            $table->unsignedBigInteger('odid')->index();
+            $table->unsignedBigInteger('nmId')->index();
+            $table->string('subject')->index();
+            $table->string('category')->index();
+            $table->string('brand')->index();
+            $table->boolean('isCancel')->index();
+            $table->dateTime('cancel_dt')->index();
             $table->string('sticker');
-            $table->string('srid');
+            $table->string('srid')->index();
         });
     }
 

@@ -15,7 +15,7 @@ return new class extends Migration {
         Schema::create('ozon_postings', function (Blueprint $table) {
             $table->string('addressee_name')->nullable();
             $table->string('addressee_phone')->nullable();
-            $table->string('city');
+            $table->string('city')->index();
             $table->dateTime('delivery_date_begin')->index();
             $table->dateTime('delivery_date_end')->index();
             $table->string('delivery_type');

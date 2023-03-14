@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('present');
             $table->unsignedBigInteger('reserved');
             $table->string('type')->index();
-            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('created_at')->useCurrent()->index();
         });
     }
 

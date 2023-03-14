@@ -16,6 +16,7 @@ class UpdateOZONStocks implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    private int $limit = 1000;
     /**
      * Create a new job instance.
      *
@@ -40,7 +41,7 @@ class UpdateOZONStocks implements ShouldQueue
                     'product_id' => [],
                     'visibility' => 'ALL'
                 ],
-                'limit' => 1000,
+                'limit' => $this->limit,
                 "last_id" => $lastId
             ]);
         return $response;
@@ -58,7 +59,7 @@ class UpdateOZONStocks implements ShouldQueue
 
             $result = $response->json()['result']['items'];
 
-            while (count($response->json()['result']['items']) >= 999) {
+            while (count($response->json()['result']['items']) >= $this->limit - 1) {
 
                 $response = $this->makeRequest($response->json()['result']['last_id']);
 
