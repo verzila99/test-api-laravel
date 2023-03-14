@@ -45,7 +45,7 @@ class UpdateWBPrices implements ShouldQueue
 
                 foreach ($response->json() as $key => $value) {
 
-                    DB::table('wb_prices')->insert([
+                    DB::table('wb_prices')->insertOrIgnore([
                         'nmId' => $value['nmId'],
                         'price' => $value['price'],
                         'discount' => $value['discount'],

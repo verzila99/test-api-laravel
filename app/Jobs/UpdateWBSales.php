@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\WbSale;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -38,7 +39,7 @@ class UpdateWBSales implements ShouldQueue
                 'Authorization' => env('WB_STATISTICS_API_KEY')
             ]
         )->get('https://statistics-api.wildberries.ru/api/v1/supplier/sales', [
-                'dateFrom' => Carbon::yesterday("UTC")->toIso8601ZuluString(),
+                'dateFrom' => Carbon::yesterday("Europe/Moscow")->toIso8601ZuluString(),
                 'flag' => 0
             ]);
 
@@ -48,7 +49,7 @@ class UpdateWBSales implements ShouldQueue
 
                 foreach ($response->json() as $key => $value) {
 
-                    DB::table('wb_sales')->insert([
+                    DB::table('wb_sales')->insertOrIgnore([
                         'gNumber' => $value['gNumber'],
                         'date' => $value['date'],
                         'lastChangeDate' => $value['lastChangeDate'],

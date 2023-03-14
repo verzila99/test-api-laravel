@@ -42,6 +42,7 @@ return new class extends Migration {
             $table->integer('isStorno');
             $table->string('sticker');
             $table->string('srid')->index();
+            $table->unique(['barcode', 'saleID']);
         });
     }
 

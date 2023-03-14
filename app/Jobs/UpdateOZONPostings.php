@@ -39,8 +39,8 @@ class UpdateOZONPostings implements ShouldQueue
                 'filter' => [
                     'delivery_method_id' => [],
                     'provider_id' => [],
-                    'since' => Carbon::yesterday("UTC")->toIso8601ZuluString(),
-                    'to' => Carbon::today("UTC")->toIso8601ZuluString(),
+                    'since' => Carbon::yesterday("Europe/Moscow")->toIso8601ZuluString(),
+                    'to' => Carbon::today("Europe/Moscow")->toIso8601ZuluString(),
                     'status' => '',
                     'warehouse_id' => [],
                 ],
@@ -82,7 +82,7 @@ class UpdateOZONPostings implements ShouldQueue
             DB::transaction(function () use ($result) {
 
                 foreach ($result as $value) {
-                    DB::table('ozon_postings')->insert([
+                    DB::table('ozon_postings')->insertOrIgnore([
                         'addressee_name' => $value['addressee']['name'] ?? null,
                         'addressee_phone' => $value['addressee']['phone'] ?? null,
                         'city' => $value['analytics_data']['city'],

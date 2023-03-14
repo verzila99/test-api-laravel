@@ -31,6 +31,7 @@ return new class extends Migration {
             $table->bigInteger('Price');
             $table->bigInteger('Discount');
             $table->timestamp('created_at')->useCurrent()->index();
+            $table->unique(['barcode', 'warehouseName']);
         });
     }
 

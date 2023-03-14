@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\WbStock;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -38,7 +39,7 @@ class UpdateWBStocks implements ShouldQueue
                 'Authorization' => env('WB_STATISTICS_API_KEY')
             ]
         )->get('https://statistics-api.wildberries.ru/api/v1/supplier/stocks', [
-                'dateFrom' => Carbon::yesterday("UTC")->toIso8601ZuluString()
+                'dateFrom' => Carbon::yesterday("Europe/Moscow")->toIso8601ZuluString()
             ]);
 
         if ($response->successful()) {
@@ -47,7 +48,7 @@ class UpdateWBStocks implements ShouldQueue
 
                 foreach ($response->json() as $key => $value) {
 
-                    DB::table('wb_stocks')->insert([
+                    DB::table('wb_stocks')->insertOrIgnore([
                         'lastChangeDate' => $value['lastChangeDate'],
                         'supplierArticle' => $value['supplierArticle'],
                         'techSize' => $value['techSize'],

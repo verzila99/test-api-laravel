@@ -26,6 +26,7 @@ return new class extends Migration {
             $table->string('warehouseName')->index();
             $table->unsignedBigInteger('nmId')->index();
             $table->string('status')->index();
+            $table->unique(['incomeId', 'barcode']);
         });
     }
 

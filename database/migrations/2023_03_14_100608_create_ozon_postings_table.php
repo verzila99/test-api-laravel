@@ -63,7 +63,7 @@ return new class extends Migration {
             $table->string('status')->index();
             $table->string('tpl_integration_type');
             $table->string('tracking_number');
-
+            $table->unique(['order_id']);
         });
     }
 

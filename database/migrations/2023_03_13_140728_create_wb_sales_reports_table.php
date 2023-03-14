@@ -12,7 +12,7 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('wb_sales_report_by_realizations', function (Blueprint $table) {
+        Schema::create('wb_sales_reports', function (Blueprint $table) {
             $table->unsignedBigInteger('realizationreport_id')->index();
             $table->dateTime('date_from')->index();
             $table->dateTime('date_to')->index();
@@ -69,6 +69,7 @@ return new class extends Migration {
             $table->bigInteger('additional_payment');
             $table->string('kiz');
             $table->string('srid');
+            $table->unique(['realizationreport_id', 'rrd_id']);
         });
     }
 

@@ -38,7 +38,7 @@ class UpdateWBOrders implements ShouldQueue
                 'Authorization' => env('WB_STATISTICS_API_KEY')
             ]
         )->get('https://statistics-api.wildberries.ru/api/v1/supplier/orders', [
-                'dateFrom' => Carbon::yesterday("UTC")->toIso8601ZuluString(),
+                'dateFrom' => Carbon::yesterday("Europe/Moscow")->toIso8601ZuluString(),
                 'flag' => 0
             ]);
 
@@ -48,7 +48,7 @@ class UpdateWBOrders implements ShouldQueue
 
                 foreach ($response->json() as $key => $value) {
 
-                    DB::table('wb_orders')->insert([
+                    DB::table('wb_orders')->insertOrIgnore([
                         'gNumber' => $value['gNumber'],
                         'date' => $value['date'],
                         'lastChangeDate' => $value['lastChangeDate'],

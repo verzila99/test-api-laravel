@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class UpdateWBSalesReportByRealizationTest extends TestCase
+class UpdateWBSalesReportsTest extends TestCase
 {
     /**
      * A basic feature test example.
@@ -17,7 +17,7 @@ class UpdateWBSalesReportByRealizationTest extends TestCase
     {
 
 
-        $job = new \App\Jobs\UpdateWBSalesReportByRealization;
+        $job = new \App\Jobs\UpdateWBSalesReports;
 
         $job->handle();
 

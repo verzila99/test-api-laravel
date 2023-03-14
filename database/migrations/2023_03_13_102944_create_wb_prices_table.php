@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,8 +18,8 @@ return new class extends Migration {
             $table->bigInteger('price')->index();
             $table->bigInteger('discount');
             $table->unsignedBigInteger('promoCode')->index();
-            $table->timestamp('created_at')->useCurrent()->index();
-
+            $table->date('created_at')->default(Carbon::today('Europe/Moscow'));
+            $table->unique(['nmId', 'created_at']);
         });
     }
 

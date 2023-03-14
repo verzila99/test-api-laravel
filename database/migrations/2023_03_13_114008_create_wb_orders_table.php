@@ -32,7 +32,8 @@ return new class extends Migration {
             $table->boolean('isCancel')->index();
             $table->dateTime('cancel_dt')->index();
             $table->string('sticker');
-            $table->string('srid')->index();
+            $table->string('srid');
+            $table->unique(['srid']);
         });
     }
 
