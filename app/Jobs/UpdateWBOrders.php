@@ -33,10 +33,9 @@ class UpdateWBOrders implements ShouldQueue
      */
     public function handle()
     {
-        dd(Carbon::yesterday("UTC")->toIso8601ZuluString());
         $response = Http::retry(3, 100)->withHeaders(
             [
-                'Authorization' => env('STATISTICS_KEY_API')
+                'Authorization' => env('WB_STATISTICS_API_KEY')
             ]
         )->get('https://statistics-api.wildberries.ru/api/v1/supplier/orders', [
                 'dateFrom' => Carbon::yesterday("UTC")->toIso8601ZuluString(),

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WbSales extends Model
+class WbOrder extends Model
 {
     use HasFactory;
     protected $guarded = [];

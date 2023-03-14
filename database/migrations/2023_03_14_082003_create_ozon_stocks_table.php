@@ -12,13 +12,13 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('wb_prices', function (Blueprint $table) {
-            $table->unsignedBigInteger('nmId')->index();
-            $table->bigInteger('price')->index();
-            $table->bigInteger('discount');
-            $table->unsignedBigInteger('promoCode')->index();
+        Schema::create('ozon_stocks', function (Blueprint $table) {
+            $table->string('offer_id')->index();
+            $table->unsignedBigInteger('product_id')->index();
+            $table->unsignedBigInteger('present');
+            $table->unsignedBigInteger('reserved');
+            $table->string('type')->index();
             $table->timestamp('created_at')->useCurrent();
-
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('wb_prices');
+        Schema::dropIfExists('ozon_stocks');
     }
 };

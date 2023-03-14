@@ -2,12 +2,15 @@
 
 namespace App\Jobs;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class UpdateOZONStocks implements ShouldQueue
 {
@@ -23,6 +26,25 @@ class UpdateOZONStocks implements ShouldQueue
         //
     }
 
+
+    public function makeRequest(string $lastId = ''): \Illuminate\Http\Client\Response
+    {
+        $response = Http::retry(3, 100)->withHeaders(
+            [
+                'Client-Id' => env('OZON_CLIENT_ID'),
+                'Api-Key' => env('OZON_API_KEY')
+            ]
+        )->post('https://api-seller.ozon.ru/v3/product/info/stocks', [
+                'filter' => [
+                    'offer_id' => [],
+                    'product_id' => [],
+                    'visibility' => 'ALL'
+                ],
+                'limit' => 1000,
+                "last_id" => $lastId
+            ]);
+        return $response;
+    }
     /**
      * Execute the job.
      *
@@ -30,6 +52,39 @@ class UpdateOZONStocks implements ShouldQueue
      */
     public function handle()
     {
-        //
+        $response = $this->makeRequest();
+
+        if ($response->successful()) {
+
+            $result = $response->json()['result']['items'];
+
+            while (count($response->json()['result']['items']) >= 999) {
+
+                $response = $this->makeRequest($response->json()['result']['last_id']);
+
+                $result = array_merge($result, $response->json()['result']['items']);
+
+            }
+
+            DB::transaction(function () use ($result) {
+
+                foreach ($result as $value) {
+
+                    foreach ($value['stocks'] as $stock) {
+
+                        DB::table('ozon_stocks')->insert([
+                            'offer_id' => $value['offer_id'],
+                            'product_id' => $value['product_id'],
+                            'present' => $stock['present'],
+                            'reserved' => $stock['reserved'],
+                            'type' => $stock['type']
+
+                        ]);
+                    }
+                }
+            });
+        } else {
+            $response->throw();
+        }
     }
 }

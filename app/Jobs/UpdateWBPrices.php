@@ -34,7 +34,7 @@ class UpdateWBPrices implements ShouldQueue
     public function handle()
     {
         $response = Http::retry(3, 100)->withHeaders([
-            'Authorization' => env('STANDARD_KEY_API')
+            'Authorization' => env('WB_STANDARD_API_KEY')
         ])->get('https://suppliers-api.wildberries.ru/public/api/v1/info', [
                 'quantity' => 0
             ]);

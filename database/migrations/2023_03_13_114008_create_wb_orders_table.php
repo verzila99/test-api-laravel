@@ -19,8 +19,8 @@ return new class extends Migration {
             $table->string('supplierArticle');
             $table->string('techSize');
             $table->string('barcode');
-            $table->unsignedInteger('totalPrice');
-            $table->unsignedInteger('discountPercent');
+            $table->bigInteger('totalPrice');
+            $table->bigInteger('discountPercent');
             $table->string('warehouseName');
             $table->string('oblast');
             $table->unsignedBigInteger('incomeID');

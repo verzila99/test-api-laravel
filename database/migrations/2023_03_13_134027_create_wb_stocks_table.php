@@ -17,21 +17,20 @@ return new class extends Migration {
             $table->string('supplierArticle')->index();
             $table->string('techSize');
             $table->string('barcode')->index();
-            $table->integer('quantity');
+            $table->unsignedBigInteger('quantity');
             $table->boolean('isSupply');
             $table->boolean('isRealization');
-            $table->integer('quantityFull');
+            $table->unsignedBigInteger('quantityFull');
             $table->string('warehouseName')->index();
-            $table->integer('nmId');
+            $table->bigInteger('nmId');
             $table->string('subject')->index();
             $table->string('category')->index();
             $table->integer('daysOnSite');
             $table->string('brand')->index();
             $table->string('SCCode');
-            $table->integer('Price');
-            $table->integer('Discount');
+            $table->bigInteger('Price');
+            $table->bigInteger('Discount');
             $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
         });
     }
 
