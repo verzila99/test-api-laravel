@@ -23,14 +23,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new UpdateOZONPostings)->timezone('Europe/Moscow')->dailyAt('17:22');
-        $schedule->job(new UpdateOZONStocks)->timezone('Europe/Moscow')->dailyAt('17:22');
-        $schedule->job(new UpdateWBOrders)->timezone('Europe/Moscow')->dailyAt('17:22');
-        $schedule->job(new UpdateWBPrices)->timezone('Europe/Moscow')->dailyAt('17:22');
-        $schedule->job(new UpdateWBSales)->timezone('Europe/Moscow')->dailyAt('17:22');
-        $schedule->job(new UpdateWBSalesReportByRealization)->timezone('Europe/Moscow')->dailyAt('17:22');
-        $schedule->job(new UpdateWBStocks)->timezone('Europe/Moscow')->dailyAt('17:22');
-        $schedule->job(new UpdateWBSupplies)->timezone('Europe/Moscow')->dailyAt('17:22');
+        $schedule->job(new UpdateOZONPostings)->timezone('Europe/Moscow')->dailyAt('17:41');
+        $schedule->job(new UpdateOZONStocks)->timezone('Europe/Moscow')->dailyAt('17:41');
+        $schedule->job(new UpdateWBOrders)->timezone('Europe/Moscow')->dailyAt('17:41');
+        $schedule->job(new UpdateWBPrices)->timezone('Europe/Moscow')->dailyAt('17:41');
+        $schedule->job(new UpdateWBSales)->timezone('Europe/Moscow')->dailyAt('17:41');
+        $schedule->job(new UpdateWBSalesReportByRealization)->timezone('Europe/Moscow')->dailyAt('17:41');
+        $schedule->job(new UpdateWBStocks)->timezone('Europe/Moscow')->dailyAt('17:41');
+        $schedule->job(new UpdateWBSupplies)->timezone('Europe/Moscow')->dailyAt('17:41');
     }
 
     /**
