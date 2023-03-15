@@ -50,6 +50,7 @@ class UpdateWBPrices implements ShouldQueue
                         'price' => $value['price'],
                         'discount' => $value['discount'],
                         'promoCode' => $value['promoCode'],
+                        'created_at' => Carbon::today('Europe/Moscow')
                     ]);
                 }
             });

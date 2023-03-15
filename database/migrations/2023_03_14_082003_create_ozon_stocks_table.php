@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('present');
             $table->unsignedBigInteger('reserved');
             $table->string('type')->index();
-            $table->date('created_at')->default(Carbon::today('Europe/Moscow'));
+            $table->date('created_at');
             $table->unique(['offer_id', 'created_at']);
         });
     }

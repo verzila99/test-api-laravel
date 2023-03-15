@@ -78,8 +78,8 @@ class UpdateOZONStocks implements ShouldQueue
                             'product_id' => $value['product_id'],
                             'present' => $stock['present'],
                             'reserved' => $stock['reserved'],
-                            'type' => $stock['type']
-
+                            'type' => $stock['type'],
+                            'created_at' => Carbon::today('Europe/Moscow')
                         ]);
                     }
                 }

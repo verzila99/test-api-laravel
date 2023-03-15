@@ -30,7 +30,7 @@ return new class extends Migration {
             $table->string('SCCode');
             $table->bigInteger('Price');
             $table->bigInteger('Discount');
-            $table->timestamp('created_at')->useCurrent()->index();
+            $table->date('created_at');
             $table->unique(['barcode', 'warehouseName']);
         });
     }

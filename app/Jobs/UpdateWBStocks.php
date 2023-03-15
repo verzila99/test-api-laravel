@@ -65,8 +65,8 @@ class UpdateWBStocks implements ShouldQueue
                         'brand' => $value['brand'],
                         'SCCode' => $value['SCCode'],
                         'Price' => $value['Price'],
-                        'Discount' => $value['Discount']
-
+                        'Discount' => $value['Discount'],
+                        'created_at' => Carbon::today('Europe/Moscow')
                     ]);
                 }
             });
