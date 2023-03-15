@@ -17,7 +17,7 @@ class UpdateOZONPostingsTest extends TestCase
     {
 
 
-        $job = new \App\Jobs\UpdateOZONPostings;
+        $job = new \App\Jobs\UpdateOZONFbsPostings;
 
         $job->handle();
 

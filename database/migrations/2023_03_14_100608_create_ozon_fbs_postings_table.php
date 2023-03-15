@@ -12,7 +12,7 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('ozon_postings', function (Blueprint $table) {
+        Schema::create('ozon_fbs_postings', function (Blueprint $table) {
             $table->string('addressee_name')->nullable();
             $table->string('addressee_phone')->nullable();
             $table->string('city')->index();
@@ -57,13 +57,14 @@ return new class extends Migration {
             $table->unsignedBigInteger('order_id');
             $table->string('order_number');
             $table->string('parent_posting_number');
+            $table->string('posting_number');
             $table->json('products');
             $table->json('requirements');
             $table->dateTime('shipment_date')->index();
             $table->string('status')->index();
             $table->string('tpl_integration_type');
             $table->string('tracking_number');
-            $table->unique(['order_id']);
+            $table->unique(['order_id', 'posting_number']);
         });
     }
 

@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
-class UpdateOZONPostings implements ShouldQueue
+class UpdateOZONFbsPostings implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -127,6 +127,7 @@ class UpdateOZONPostings implements ShouldQueue
                         'order_id' => $value['order_id'],
                         'order_number' => $value['order_number'],
                         'parent_posting_number' => $value['parent_posting_number'],
+                        'posting_number' => $value['posting_number'],
                         'products' => json_encode($value['products']),
                         'requirements' => json_encode($value['requirements']),
                         'shipment_date' => Carbon::parse($value['shipment_date']),
