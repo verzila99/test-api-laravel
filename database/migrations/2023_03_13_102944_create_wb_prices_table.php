@@ -18,8 +18,8 @@ return new class extends Migration {
             $table->bigInteger('price')->index();
             $table->bigInteger('discount');
             $table->unsignedBigInteger('promoCode')->index();
-            $table->date('created_at');
-            $table->unique(['nmId', 'created_at']);
+            $table->date('created_at')->index();
+
         });
     }
 

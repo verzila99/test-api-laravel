@@ -45,13 +45,13 @@ class UpdateWBPrices implements ShouldQueue
 
                 foreach ($response->json() as $key => $value) {
 
-                    DB::table('wb_prices')->insertOrIgnore([
+                    DB::table('wb_prices')->upsert([
                         'nmId' => $value['nmId'],
                         'price' => $value['price'],
                         'discount' => $value['discount'],
                         'promoCode' => $value['promoCode'],
                         'created_at' => Carbon::today('Europe/Moscow')
-                    ]);
+                    ], [, 'nmId', 'created_at'], ['price', 'discount', 'promoCode']);
                 }
             });
 

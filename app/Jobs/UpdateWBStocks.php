@@ -48,26 +48,45 @@ class UpdateWBStocks implements ShouldQueue
 
                 foreach ($response->json() as $key => $value) {
 
-                    DB::table('wb_stocks')->insertOrIgnore([
-                        'lastChangeDate' => $value['lastChangeDate'],
-                        'supplierArticle' => $value['supplierArticle'],
-                        'techSize' => $value['techSize'],
-                        'barcode' => $value['barcode'],
-                        'quantity' => $value['quantity'],
-                        'isSupply' => $value['isSupply'],
-                        'isRealization' => $value['isRealization'],
-                        'quantityFull' => $value['quantityFull'],
-                        'warehouseName' => $value['warehouseName'],
-                        'nmId' => $value['nmId'],
-                        'subject' => $value['subject'],
-                        'category' => $value['category'],
-                        'daysOnSite' => $value['daysOnSite'],
-                        'brand' => $value['brand'],
-                        'SCCode' => $value['SCCode'],
-                        'Price' => $value['Price'],
-                        'Discount' => $value['Discount'],
-                        'created_at' => Carbon::today('Europe/Moscow')
-                    ]);
+                    DB::table('wb_stocks')->upsert(
+                        [
+                            'lastChangeDate' => $value['lastChangeDate'],
+                            'supplierArticle' => $value['supplierArticle'],
+                            'techSize' => $value['techSize'],
+                            'barcode' => $value['barcode'],
+                            'quantity' => $value['quantity'],
+                            'isSupply' => $value['isSupply'],
+                            'isRealization' => $value['isRealization'],
+                            'quantityFull' => $value['quantityFull'],
+                            'warehouseName' => $value['warehouseName'],
+                            'nmId' => $value['nmId'],
+                            'subject' => $value['subject'],
+                            'category' => $value['category'],
+                            'daysOnSite' => $value['daysOnSite'],
+                            'brand' => $value['brand'],
+                            'SCCode' => $value['SCCode'],
+                            'Price' => $value['Price'],
+                            'Discount' => $value['Discount'],
+                            'created_at' => Carbon::today('Europe/Moscow')
+                        ],
+                        ['barcode', 'warehouseName', 'created_at'],
+                        [
+                            'lastChangeDate',
+                            'supplierArticle',
+                            'techSize',
+                            'quantity',
+                            'quantityFull',
+                            'Price',
+                            'Discount',
+                            'daysOnSite',
+                            'isSupply',
+                            'isRealization',
+                            'nmId',
+                            'subject',
+                            'category',
+                            'brand',
+                            'SCCode'
+                        ]);
                 }
             });
         } else {

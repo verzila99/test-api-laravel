@@ -45,7 +45,7 @@ return new class extends Migration {
             $table->string('gi_box_type_name');
             $table->integer('product_discount_for_report');
             $table->bigInteger('supplier_promo');
-            $table->bigInteger('rid')->index();
+            $table->bigInteger('rid');
             $table->bigInteger('ppvz_spp_prc');
             $table->bigInteger('ppvz_kvw_prc_base');
             $table->bigInteger('ppvz_kvw_prc');
@@ -69,7 +69,7 @@ return new class extends Migration {
             $table->bigInteger('additional_payment');
             $table->string('kiz');
             $table->string('srid');
-            $table->unique(['realizationreport_id', 'rrd_id']);
+            $table->unique(['rrd_id']);
         });
     }
 

@@ -73,14 +73,17 @@ class UpdateOZONStocks implements ShouldQueue
 
                     foreach ($value['stocks'] as $stock) {
 
-                        DB::table('ozon_stocks')->insertOrIgnore([
-                            'offer_id' => $value['offer_id'],
-                            'product_id' => $value['product_id'],
-                            'present' => $stock['present'],
-                            'reserved' => $stock['reserved'],
-                            'type' => $stock['type'],
-                            'created_at' => Carbon::today('Europe/Moscow')
-                        ]);
+                        DB::table('ozon_stocks')->upsert(
+                            [
+                                'offer_id' => $value['offer_id'],
+                                'product_id' => $value['product_id'],
+                                'present' => $stock['present'],
+                                'reserved' => $stock['reserved'],
+                                'type' => $stock['type'],
+                                'created_at' => Carbon::today('Europe/Moscow')
+                            ],
+                            ['offer_id', 'product_id', 'created_at'],
+                            ['present', 'reserved', 'type']);
                     }
                 }
             });

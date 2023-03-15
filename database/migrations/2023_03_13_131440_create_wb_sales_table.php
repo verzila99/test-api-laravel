@@ -29,7 +29,7 @@ return new class extends Migration {
             $table->string('oblastOkrugName');
             $table->string('regionName');
             $table->bigInteger('incomeID')->index();
-            $table->string('saleID')->index();
+            $table->string('saleID');
             $table->string('odid')->index();
             $table->bigInteger('spp');
             $table->bigInteger('forPay');
@@ -42,7 +42,7 @@ return new class extends Migration {
             $table->integer('isStorno');
             $table->string('sticker');
             $table->string('srid')->index();
-            $table->unique(['barcode', 'saleID']);
+            $table->unique(['saleID']);
         });
     }
 

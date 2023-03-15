@@ -39,12 +39,12 @@ class UpdateWBSalesReports implements ShouldQueue
                 'Authorization' => env('WB_STATISTICS_API_KEY')
             ]
         )->get('https://statistics-api.wildberries.ru/api/v1/supplier/reportDetailByPeriod', [
-                'dateFrom' => Carbon::yesterday("Europe/Moscow")->toIso8601ZuluString(),
+                'dateFrom' => Carbon::create(2023, 3, 1, 0, 0, 0, "Europe/Moscow")->toIso8601ZuluString(),
                 'dateTo' => Carbon::today("Europe/Moscow")->toIso8601ZuluString(),
             ]);
 
         if ($response->successful() && $response->json() !== null) {
-
+            dd($response->json());
             DB::transaction(function () use ($response) {
 
                 foreach ($response->json() as $key => $value) {

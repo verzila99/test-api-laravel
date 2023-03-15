@@ -2,12 +2,13 @@
 
 namespace App\Console;
 
-use App\Jobs\UpdateOZONPostings;
+use App\Jobs\UpdateOZONFboPostings;
+use App\Jobs\UpdateOZONFbsPostings;
 use App\Jobs\UpdateOZONStocks;
 use App\Jobs\UpdateWBOrders;
 use App\Jobs\UpdateWBPrices;
 use App\Jobs\UpdateWBSales;
-use App\Jobs\UpdateWBSalesReportByRealization;
+use App\Jobs\UpdateWBSalesReports;
 use App\Jobs\UpdateWBStocks;
 use App\Jobs\UpdateWBSupplies;
 use Illuminate\Console\Scheduling\Schedule;
@@ -23,12 +24,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new UpdateOZONPostings)->timezone('Europe/Moscow')->dailyAt('0:00');
+        $schedule->job(new UpdateOZONFbsPostings)->timezone('Europe/Moscow')->dailyAt('0:00');
+        $schedule->job(new UpdateOZONFboPostings)->timezone('Europe/Moscow')->dailyAt('0:00');
         $schedule->job(new UpdateOZONStocks)->timezone('Europe/Moscow')->dailyAt('0:00');
         $schedule->job(new UpdateWBOrders)->timezone('Europe/Moscow')->dailyAt('0:00');
         $schedule->job(new UpdateWBPrices)->timezone('Europe/Moscow')->dailyAt('0:00');
         $schedule->job(new UpdateWBSales)->timezone('Europe/Moscow')->dailyAt('0:00');
-        $schedule->job(new UpdateWBSalesReportByRealization)->timezone('Europe/Moscow')->dailyAt('0:00');
+        $schedule->job(new UpdateWBSalesReports)->timezone('Europe/Moscow')->dailyAt('0:00');
         $schedule->job(new UpdateWBStocks)->timezone('Europe/Moscow')->dailyAt('0:00');
         $schedule->job(new UpdateWBSupplies)->timezone('Europe/Moscow')->dailyAt('0:00');
     }

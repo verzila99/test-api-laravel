@@ -57,9 +57,7 @@ return new class extends Migration {
             $table->double('item_marketplace_service_item_return_part_goods_customer')->nullable();
             $table->double('old_price')->nullable();
             $table->double('payout')->nullable();
-            $table->double('picking_amount')->nullable();
-            $table->dateTime('picking_moment')->nullable();
-            $table->string('picking_tag')->nullable();
+            $table->json('picking')->nullable();
             $table->double('financial_data_products_price')->nullable();
             $table->unsignedBigInteger('financial_data_products_product_id')->nullable();
             $table->unsignedBigInteger('financial_data_products_quantity')->nullable();

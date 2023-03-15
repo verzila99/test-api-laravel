@@ -17,6 +17,7 @@ class UpdateOZONFboPostings implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private int $limit;
+    private int $offset;
     /**
      * Create a new job instance.
      *
@@ -24,7 +25,8 @@ class UpdateOZONFboPostings implements ShouldQueue
      */
     public function __construct()
     {
-        $this->limit = 10;
+        $this->limit  = 1000;
+        $this->offset = 1000;
     }
 
     public function makeRequest(int $offset = 0): \Illuminate\Http\Client\Response
@@ -68,11 +70,11 @@ class UpdateOZONFboPostings implements ShouldQueue
 
             while (count($response->json()['result']) >= $this->limit - 1) {
 
-                $response = $this->makeRequest($this->limit);
+                $response = $this->makeRequest($this->offset);
 
                 $result = array_merge($result, $response->json()['result']);
 
-                $this->limit += $this->limit;
+                $this->offset += $this->limit;
             }
 
             DB::transaction(function () use ($result) {
@@ -134,9 +136,7 @@ class UpdateOZONFboPostings implements ShouldQueue
                                         'item_marketplace_service_item_return_not_deliv_to_customer' => $financialDataProduct['item_services']['marketplace_service_item_return_not_deliv_to_customer'] ?? null,
                                         'old_price' => $financialDataProduct['old_price'] ?? null,
                                         'payout' => $financialDataProduct['payout'] ?? null,
-                                        'picking_amount' => $financialDataProduct['picking']['amount'] ?? null,
-                                        'picking_moment' => $financialDataProduct['picking']['moment'] ?? null,
-                                        'picking_tag' => $financialDataProduct['picking']['tag'] ?? null,
+                                        'picking' => json_encode($financialDataProduct['picking'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?? null,
                                         'financial_data_products_price' => $financialDataProduct['price'] ?? null,
                                         'financial_data_products_product_id' => $financialDataProduct['product_id'] ?? null,
                                         'financial_data_products_quantity' => $financialDataProduct['quantity'] ?? null,

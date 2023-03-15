@@ -14,13 +14,12 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('ozon_stocks', function (Blueprint $table) {
-            $table->string('offer_id');
+            $table->string('offer_id')->index();
             $table->unsignedBigInteger('product_id')->index();
             $table->unsignedBigInteger('present');
             $table->unsignedBigInteger('reserved');
             $table->string('type')->index();
-            $table->date('created_at');
-            $table->unique(['offer_id', 'created_at']);
+            $table->date('created_at')->index();
         });
     }
 

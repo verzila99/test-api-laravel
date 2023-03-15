@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->string('warehouseName')->index();
             $table->string('oblast')->index();
             $table->unsignedBigInteger('incomeID')->index();
-            $table->unsignedBigInteger('odid')->index();
+            $table->unsignedBigInteger('odid');
             $table->unsignedBigInteger('nmId')->index();
             $table->string('subject')->index();
             $table->string('category')->index();
@@ -33,7 +33,7 @@ return new class extends Migration {
             $table->dateTime('cancel_dt')->index();
             $table->string('sticker');
             $table->string('srid');
-            $table->unique(['srid']);
+            $table->unique(['odid']);
         });
     }
 
