@@ -39,7 +39,7 @@ class UpdateWBStocks implements ShouldQueue
                 'Authorization' => env('WB_STATISTICS_API_KEY')
             ]
         )->get('https://statistics-api.wildberries.ru/api/v1/supplier/stocks', [
-                'dateFrom' => Carbon::yesterday("Europe/Moscow")->toIso8601ZuluString()
+                'dateFrom' => Carbon::yesterday("Europe/Moscow")->toDateTimeLocalString()
             ]);
 
         if ($response->successful()) {
