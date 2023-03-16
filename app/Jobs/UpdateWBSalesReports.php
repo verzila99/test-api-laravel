@@ -48,7 +48,7 @@ class UpdateWBSalesReports implements ShouldQueue
      */
     public function handle()
     {
-        $period = new CarbonPeriod(Carbon::create(2022, 1, 1, 0, 0, 0, "Europe/Moscow"), '30 days', Carbon::today("Europe/Moscow"));
+        $period = new CarbonPeriod(Carbon::create(2023, 1, 1, 0, 0, 0, "Europe/Moscow"), '30 days', Carbon::today("Europe/Moscow"));
 
         foreach ($period as $value) {
 
@@ -126,7 +126,7 @@ class UpdateWBSalesReports implements ShouldQueue
 
                 $response->throw();
             }
-            sleep(5);
+
         }
 
 

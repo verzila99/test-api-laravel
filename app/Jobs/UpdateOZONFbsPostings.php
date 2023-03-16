@@ -40,8 +40,8 @@ class UpdateOZONFbsPostings implements ShouldQueue
                 'filter' => [
                     'delivery_method_id' => [],
                     'provider_id' => [],
-                    'since' => Carbon::create(2023, 1, 1, 0, 0, 0, "Europe/Moscow")->toDateTimeLocalString(),
-                    'to' => Carbon::today("Europe/Moscow")->toDateTimeLocalString(),
+                    'since' => Carbon::create(2023, 1, 1, 0, 0, 0, "Europe/Moscow")->toIso8601ZuluString(),
+                    'to' => Carbon::today("Europe/Moscow")->toIso8601ZuluString(),
                     'status' => '',
                     'warehouse_id' => [],
                 ],
