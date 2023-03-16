@@ -1,4 +1,4 @@
-FROM php:8.0-fpm
+FROM php:8.1-fpm
 
 # Copy composer.lock and composer.json
 COPY composer.lock composer.json /var/www/
@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y \
     jpegoptim optipng pngquant gifsicle \
     vim \
     unzip \
+    mbstring\
     git \
     curl
 

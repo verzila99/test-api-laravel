@@ -26,6 +26,8 @@ services:
         tty: true
         environment:
             MYSQL_DATABASE: laravel
+            MYSQL_USER: phpmyadmin
+            MYSQL_PASSWORD: 123
             MYSQL_ROOT_PASSWORD: 123
             SERVICE_TAGS: dev
             SERVICE_NAME: mysql
