@@ -46,6 +46,33 @@ class UpdateOZONStocks implements ShouldQueue
             ]);
         return $response;
     }
+    public function transaction($result)
+    {
+        DB::transaction(function () use ($result) {
+
+            DB::table('ozon_stocks')->where(
+                'created_at',
+                '=', Carbon::today('Europe/Moscow')->format('Y-m-d'))->delete();
+
+            foreach ($result as $value) {
+
+                foreach ($value['stocks'] as $stock) {
+
+                    DB::table('ozon_stocks')->insert(
+                        [
+                            'offer_id' => $value['offer_id'],
+                            'product_id' => $value['product_id'],
+                            'created_at' => Carbon::today('Europe/Moscow'),
+                            'present' => $stock['present'],
+                            'reserved' => $stock['reserved'],
+                            'type' => $stock['type'],
+
+                        ],
+                    );
+                }
+            }
+        });
+    }
     /**
      * Execute the job.
      *
@@ -59,31 +86,12 @@ class UpdateOZONStocks implements ShouldQueue
 
             $result = $response->json()['result']['items'];
 
+            $this->transaction($result);
+
             while (count($response->json()['result']['items']) >= $this->limit - 1) {
-                DB::transaction(function () use ($result) {
 
-                    DB::table('ozon_stocks')->where(
-                        'created_at',
-                        '=', Carbon::today('Europe/Moscow')->format('Y-m-d'))->delete();
+                $this->transaction($result);
 
-                    foreach ($result as $value) {
-
-                        foreach ($value['stocks'] as $stock) {
-
-                            DB::table('ozon_stocks')->insert(
-                                [
-                                    'offer_id' => $value['offer_id'],
-                                    'product_id' => $value['product_id'],
-                                    'created_at' => Carbon::today('Europe/Moscow'),
-                                    'present' => $stock['present'],
-                                    'reserved' => $stock['reserved'],
-                                    'type' => $stock['type'],
-
-                                ],
-                            );
-                        }
-                    }
-                });
                 $response = $this->makeRequest($response->json()['result']['last_id']);
 
                 $result = $response->json()['result']['items'];
