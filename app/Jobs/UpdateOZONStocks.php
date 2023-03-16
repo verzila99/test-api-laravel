@@ -69,21 +69,25 @@ class UpdateOZONStocks implements ShouldQueue
 
             DB::transaction(function () use ($result) {
 
+                DB::table('ozon_stocks')->where(
+                    'created_at',
+                    '=', Carbon::today('Europe/Moscow')->format('Y-m-d'))->delete();
+
                 foreach ($result as $value) {
 
                     foreach ($value['stocks'] as $stock) {
 
-                        DB::table('ozon_stocks')->upsert(
+                        DB::table('ozon_stocks')->insert(
                             [
                                 'offer_id' => $value['offer_id'],
                                 'product_id' => $value['product_id'],
+                                'created_at' => Carbon::today('Europe/Moscow'),
                                 'present' => $stock['present'],
                                 'reserved' => $stock['reserved'],
                                 'type' => $stock['type'],
-                                'created_at' => Carbon::today('Europe/Moscow')
+
                             ],
-                            ['offer_id', 'product_id', 'created_at'],
-                            ['present', 'reserved', 'type']);
+                        );
                     }
                 }
             });

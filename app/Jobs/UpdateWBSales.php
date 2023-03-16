@@ -39,7 +39,7 @@ class UpdateWBSales implements ShouldQueue
                 'Authorization' => env('WB_STATISTICS_API_KEY')
             ]
         )->get('https://statistics-api.wildberries.ru/api/v1/supplier/sales', [
-                'dateFrom' => Carbon::yesterday("Europe/Moscow")->toIso8601ZuluString(),
+                'dateFrom' => Carbon::create(2023, 1, 1, 0, 0, 0, "Europe/Moscow")->toIso8601ZuluString(),
                 'flag' => 0
             ]);
 

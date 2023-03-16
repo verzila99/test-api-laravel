@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('nmId')->index();
             $table->bigInteger('price')->index();
             $table->bigInteger('discount');
-            $table->unsignedBigInteger('promoCode')->index();
+            $table->unsignedBigInteger('promoCode')->index()->nullable();
             $table->date('created_at')->index();
 
         });

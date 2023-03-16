@@ -46,19 +46,25 @@ class UpdateWBStocks implements ShouldQueue
 
             DB::transaction(function () use ($response) {
 
+
+                DB::table('wb_stocks')->where(
+                    'created_at',
+                    '=', Carbon::today('Europe/Moscow')->format('Y-m-d'))->delete();
+
                 foreach ($response->json() as $key => $value) {
 
-                    DB::table('wb_stocks')->upsert(
+                    DB::table('wb_stocks')->insert(
                         [
+                            'barcode' => $value['barcode'],
+                            'warehouseName' => $value['warehouseName'],
+                            'created_at' => Carbon::today('Europe/Moscow'),
                             'lastChangeDate' => $value['lastChangeDate'],
                             'supplierArticle' => $value['supplierArticle'],
                             'techSize' => $value['techSize'],
-                            'barcode' => $value['barcode'],
                             'quantity' => $value['quantity'],
                             'isSupply' => $value['isSupply'],
                             'isRealization' => $value['isRealization'],
                             'quantityFull' => $value['quantityFull'],
-                            'warehouseName' => $value['warehouseName'],
                             'nmId' => $value['nmId'],
                             'subject' => $value['subject'],
                             'category' => $value['category'],
@@ -67,26 +73,7 @@ class UpdateWBStocks implements ShouldQueue
                             'SCCode' => $value['SCCode'],
                             'Price' => $value['Price'],
                             'Discount' => $value['Discount'],
-                            'created_at' => Carbon::today('Europe/Moscow')
-                        ],
-                        ['barcode', 'warehouseName', 'created_at'],
-                        [
-                            'lastChangeDate',
-                            'supplierArticle',
-                            'techSize',
-                            'quantity',
-                            'quantityFull',
-                            'Price',
-                            'Discount',
-                            'daysOnSite',
-                            'isSupply',
-                            'isRealization',
-                            'nmId',
-                            'subject',
-                            'category',
-                            'brand',
-                            'SCCode'
-                        ]);
+                        ], );
                 }
             });
         } else {

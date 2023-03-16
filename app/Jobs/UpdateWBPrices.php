@@ -43,15 +43,22 @@ class UpdateWBPrices implements ShouldQueue
 
             DB::transaction(function () use ($response) {
 
-                foreach ($response->json() as $key => $value) {
+                DB::table('wb_prices')->where(
+                    'created_at', '=', Carbon::today('Europe/Moscow')->format('Y-m-d'))->delete();
+                foreach ($response->json() as $value) {
 
-                    DB::table('wb_prices')->upsert([
-                        'nmId' => $value['nmId'],
-                        'price' => $value['price'],
-                        'discount' => $value['discount'],
-                        'promoCode' => $value['promoCode'],
-                        'created_at' => Carbon::today('Europe/Moscow')
-                    ], [, 'nmId', 'created_at'], ['price', 'discount', 'promoCode']);
+
+
+                    DB::table('wb_prices')->insert(
+                        [
+                            'nmId' => $value['nmId'],
+                            'created_at' => Carbon::today('Europe/Moscow')->format('Y-m-d'),
+                            'price' => $value['price'],
+                            'discount' => $value['discount'],
+                            'promoCode' => $value['promoCode']
+                        ]
+
+                    );
                 }
             });
 
