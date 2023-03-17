@@ -13,14 +13,15 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('wb_stocks', function (Blueprint $table) {
+            $table->id();
             $table->dateTime('lastChangeDate')->index();
             $table->string('supplierArticle')->index();
             $table->string('techSize');
             $table->string('barcode')->index();
-            $table->unsignedBigInteger('quantity');
+            $table->integer('quantity');
             $table->boolean('isSupply');
             $table->boolean('isRealization');
-            $table->unsignedBigInteger('quantityFull');
+            $table->integer('quantityFull');
             $table->string('warehouseName')->index();
             $table->bigInteger('nmId');
             $table->string('subject')->index();
@@ -28,9 +29,9 @@ return new class extends Migration {
             $table->integer('daysOnSite');
             $table->string('brand')->index();
             $table->string('SCCode');
-            $table->bigInteger('Price');
-            $table->bigInteger('Discount');
-            $table->date('created_at');
+            $table->float('Price');
+            $table->float('Discount');
+            $table->date('date')->index();
         });
     }
 

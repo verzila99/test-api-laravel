@@ -48,7 +48,7 @@ class UpdateWBStocks implements ShouldQueue
 
 
                 DB::table('wb_stocks')->where(
-                    'created_at',
+                    'date',
                     '=', Carbon::today('Europe/Moscow')->format('Y-m-d'))->delete();
 
                 foreach ($response->json() as $key => $value) {
@@ -57,7 +57,7 @@ class UpdateWBStocks implements ShouldQueue
                         [
                             'barcode' => $value['barcode'],
                             'warehouseName' => $value['warehouseName'],
-                            'created_at' => Carbon::today('Europe/Moscow'),
+                            'date' => Carbon::today('Europe/Moscow'),
                             'lastChangeDate' => $value['lastChangeDate'],
                             'supplierArticle' => $value['supplierArticle'],
                             'techSize' => $value['techSize'],

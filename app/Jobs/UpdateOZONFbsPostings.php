@@ -69,7 +69,7 @@ class UpdateOZONFbsPostings implements ShouldQueue
                         DB::table('ozon_fbs_postings')->updateOrInsert([
                             'order_id' => $value['order_id'],
                             'posting_number' => $value['posting_number'],
-                            'products_sku' => $product['sku'],
+                            'sku' => $product['sku'],
                         ], [
                                 'addressee' => json_encode($value['addressee'] ?? null, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
                                 'city' => $value['analytics_data']['city'] ?? null,
@@ -131,9 +131,9 @@ class UpdateOZONFbsPostings implements ShouldQueue
                                 'old_price' => $financialDataProduct['old_price'] ?? null,
                                 'payout' => $financialDataProduct['payout'] ?? null,
                                 'picking' => json_encode($financialDataProduct['picking'] ?? null, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
-                                'financial_data_products_price' => $financialDataProduct['price'] ?? null,
-                                'financial_data_products_product_id' => $financialDataProduct['product_id'] ?? null,
-                                'financial_data_products_quantity' => $financialDataProduct['quantity'] ?? null,
+                                'price' => $financialDataProduct['price'] ?? null,
+                                'product_id' => $financialDataProduct['product_id'] ?? null,
+                                'quantity' => $financialDataProduct['quantity'] ?? null,
                                 'total_discount_percent' => $financialDataProduct['total_discount_percent'] ?? null,
                                 'total_discount_value' => $financialDataProduct['total_discount_value'] ?? null,
                                 'in_process_at' => Carbon::parse($value['in_process_at'] ?? null),

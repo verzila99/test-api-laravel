@@ -13,28 +13,29 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('wb_sales', function (Blueprint $table) {
+            $table->id();
             $table->string('gNumber')->index();
             $table->dateTime('date')->index();
             $table->dateTime('lastChangeDate')->index();
             $table->string('supplierArticle')->index();
             $table->string('techSize');
             $table->string('barcode');
-            $table->bigInteger('totalPrice');
-            $table->bigInteger('discountPercent');
+            $table->float('totalPrice');
+            $table->integer('discountPercent');
             $table->boolean('isSupply');
             $table->boolean('isRealization');
-            $table->bigInteger('promoCodeDiscount');
+            $table->float('promoCodeDiscount');
             $table->string('warehouseName')->index();
             $table->string('countryName')->index();
             $table->string('oblastOkrugName');
             $table->string('regionName');
             $table->bigInteger('incomeID')->index();
             $table->string('saleID');
-            $table->string('odid')->index();
-            $table->bigInteger('spp');
-            $table->bigInteger('forPay');
-            $table->bigInteger('finishedPrice');
-            $table->bigInteger('priceWithDisc');
+            $table->unsignedBigInteger('odid')->index();
+            $table->float('spp');
+            $table->float('forPay');
+            $table->float('finishedPrice');
+            $table->float('priceWithDisc');
             $table->bigInteger('nmId')->index();
             $table->string('subject');
             $table->string('category')->index();
@@ -43,6 +44,7 @@ return new class extends Migration {
             $table->string('sticker');
             $table->string('srid')->index();
             $table->unique(['saleID']);
+            $table->timestamps();
         });
     }
 

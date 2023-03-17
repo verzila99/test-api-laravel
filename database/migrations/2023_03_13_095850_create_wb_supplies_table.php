@@ -13,6 +13,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('wb_supplies', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('incomeId')->index();
             $table->string('number');
             $table->dateTime('date')->index();
@@ -20,8 +21,8 @@ return new class extends Migration {
             $table->string('supplierArticle')->index();
             $table->string('techSize');
             $table->string('barcode');
-            $table->unsignedInteger('quantity');
-            $table->unsignedBigInteger('totalPrice');
+            $table->integer('quantity');
+            $table->float('totalPrice');
             $table->dateTime('dateClose')->index();
             $table->string('warehouseName')->index();
             $table->unsignedBigInteger('nmId')->index();

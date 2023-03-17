@@ -13,8 +13,8 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('ozon_fbo_postings', function (Blueprint $table) {
-            $table->string('additional_data_key')->nullable();
-            $table->string('additional_data_value')->nullable();
+            $table->id();
+            $table->json('additional_data')->nullable();
             $table->string('city')->index()->nullable();
             $table->string('delivery_type')->nullable();
             $table->boolean('is_legal')->nullable();
@@ -58,24 +58,24 @@ return new class extends Migration {
             $table->double('old_price')->nullable();
             $table->double('payout')->nullable();
             $table->json('picking')->nullable();
-            $table->double('financial_data_products_price')->nullable();
-            $table->unsignedBigInteger('financial_data_products_product_id')->nullable();
-            $table->unsignedBigInteger('financial_data_products_quantity')->nullable();
+            $table->double('price')->nullable();
+            $table->unsignedBigInteger('product_id')->nullable();
+            $table->integer('quantity')->nullable();
             $table->double('total_discount_percent')->nullable();
             $table->double('total_discount_value')->nullable();
             $table->dateTime('in_process_at')->nullable();
             $table->unsignedBigInteger('order_id');
             $table->string('order_number')->nullable();
             $table->string('posting_number');
-            $table->string('products_digital_code')->nullable();
+            $table->json('products_digital_codes')->nullable();
             $table->string('products_name')->nullable();
             $table->string('products_offer_id')->index();
             $table->string('products_currency_code')->nullable();
-            $table->string('products_price')->nullable();
+            $table->double('products_price')->nullable();
             $table->string('products_quantity')->nullable();
-            $table->string('products_sku');
+            $table->string('sku');
             $table->string('status')->nullable();
-            $table->unique(['order_id', 'posting_number', 'products_sku']);
+            $table->unique(['order_id', 'posting_number', 'sku']);
         });
     }
 

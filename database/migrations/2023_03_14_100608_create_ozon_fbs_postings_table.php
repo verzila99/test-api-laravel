@@ -13,6 +13,7 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('ozon_fbs_postings', function (Blueprint $table) {
+            $table->id();
             $table->json('addressee')->nullable();
             $table->string('city')->index()->nullable();
             $table->dateTime('delivery_date_begin')->index()->nullable();
@@ -73,15 +74,15 @@ return new class extends Migration {
             $table->double('old_price')->nullable();
             $table->double('payout')->nullable();
             $table->json('picking')->nullable();
-            $table->double('financial_data_products_price')->nullable();
-            $table->unsignedBigInteger('financial_data_products_product_id')->nullable();
-            $table->unsignedBigInteger('financial_data_products_quantity')->nullable();
+            $table->double('price')->nullable();
+            $table->unsignedBigInteger('product_id')->nullable();
+            $table->integer('quantity')->nullable();
             $table->double('total_discount_percent')->nullable();
             $table->double('total_discount_value')->nullable();
             $table->dateTime('in_process_at')->nullable();
             $table->boolean('is_express')->nullable();
             $table->boolean('is_multibox')->nullable();
-            $table->unsignedBigInteger('multi_box_qty')->nullable();
+            $table->integer('multi_box_qty')->nullable();
             $table->unsignedBigInteger('order_id');
             $table->string('order_number')->nullable();
             $table->string('parent_posting_number')->nullable();
@@ -90,9 +91,9 @@ return new class extends Migration {
             $table->string('products_name')->nullable();
             $table->string('products_offer_id')->index();
             $table->string('products_currency_code')->nullable();
-            $table->string('products_price')->nullable();
+            $table->double('products_price')->nullable();
             $table->string('products_quantity')->nullable();
-            $table->string('products_sku');
+            $table->string('sku');
             $table->json('products_requiring_gtd')->nullable();
             $table->json('products_requiring_country')->nullable();
             $table->json('products_requiring_mandatory_mark')->nullable();
@@ -101,7 +102,7 @@ return new class extends Migration {
             $table->string('status')->index()->nullable();
             $table->string('tpl_integration_type')->nullable();
             $table->string('tracking_number')->nullable();
-            $table->unique(['order_id', 'posting_number', 'products_sku']);
+            $table->unique(['order_id', 'posting_number', 'sku']);
         });
     }
 

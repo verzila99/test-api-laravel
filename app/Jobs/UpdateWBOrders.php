@@ -69,6 +69,8 @@ class UpdateWBOrders implements ShouldQueue
                         'cancel_dt' => $value['cancel_dt'],
                         'sticker' => $value['sticker'],
                         'srid' => $value['srid'],
+                        'created_at' => Carbon::today('Europe/Moscow'),
+                        'updated_at' => Carbon::today('Europe/Moscow'),
                     ]);
                 }
             });

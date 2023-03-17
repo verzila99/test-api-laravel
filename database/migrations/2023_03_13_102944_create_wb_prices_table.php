@@ -14,11 +14,12 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('wb_prices', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('nmId')->index();
-            $table->bigInteger('price')->index();
-            $table->bigInteger('discount');
-            $table->unsignedBigInteger('promoCode')->index()->nullable();
-            $table->date('created_at')->index();
+            $table->float('price')->index();
+            $table->integer('discount');
+            $table->float('promoCode')->index()->nullable();
+            $table->date('date')->index();
 
         });
     }

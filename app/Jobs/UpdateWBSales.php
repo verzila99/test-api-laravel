@@ -79,6 +79,8 @@ class UpdateWBSales implements ShouldQueue
                         'isStorno' => $value['IsStorno'],
                         'sticker' => $value['sticker'],
                         'srid' => $value['srid'],
+                        'created_at' => Carbon::today('Europe/Moscow'),
+                        'updated_at' => Carbon::today('Europe/Moscow'),
                     ]);
                 }
             });
