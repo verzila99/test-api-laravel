@@ -17,8 +17,8 @@ RUN apt-get update && apt-get install -y \
     jpegoptim optipng pngquant gifsicle \
     vim \
     unzip \
-    mbstring\
     git \
+    libonig-dev\
     curl
 
 # Clear cache
@@ -29,7 +29,7 @@ RUN pecl install xdebug-3.1.2 \
 	&& docker-php-ext-enable xdebug\
 	&& echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.client_host = host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN docker-php-ext-install pdo_mysql exif pcntl
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl
 
 ADD xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 

@@ -73,8 +73,8 @@ class UpdateOZONFbsPostings implements ShouldQueue
                         ], [
                                 'addressee' => json_encode($value['addressee'] ?? null, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
                                 'city' => $value['analytics_data']['city'] ?? null,
-                                'delivery_date_begin' => Carbon::parse($value['analytics_data']['delivery_date_begin']) ?? null,
-                                'delivery_date_end' => Carbon::parse($value['analytics_data']['delivery_date_end']) ?? null,
+                                'delivery_date_begin' => Carbon::parse($value['analytics_data']['delivery_date_begin'] ?? null),
+                                'delivery_date_end' => Carbon::parse($value['analytics_data']['delivery_date_end'] ?? null),
                                 'delivery_type' => $value['analytics_data']['delivery_type'] ?? null,
                                 'is_legal' => $value['analytics_data']['is_legal'] ?? null,
                                 'is_premium' => $value['analytics_data']['is_premium'] ?? null,
