@@ -118,8 +118,8 @@ class UpdateWBSalesReports implements ShouldQueue
                                 'additional_payment' => $value['additional_payment'],
                                 'kiz' => $value['kiz'] ?? '',
                                 'srid' => $value['srid'],
-                                'created_at' => Carbon::today('Europe/Moscow'),
-                                'updated_at' => Carbon::today('Europe/Moscow'),
+                                'created_at' => Carbon::now('Europe/Moscow'),
+                                'updated_at' => Carbon::now('Europe/Moscow'),
 
                             ]);
                     }
